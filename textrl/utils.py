@@ -139,14 +139,12 @@ class SumTree:
 
     def total(self):
         return self.tree[0]
-
     def add(self, p, data):
         idx = self.write + self.capacity - 1
         self.data[self.write] = data
         self.update(idx, p)
         self.write = (self.write + 1) % self.capacity
         self.length = min(self.length + 1, self.capacity)
-
     def update(self, idx, p):
         change = p - self.tree[idx]
         self.tree[idx] = p
