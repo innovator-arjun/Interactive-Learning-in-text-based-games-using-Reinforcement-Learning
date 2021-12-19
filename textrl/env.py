@@ -9,7 +9,7 @@ class TextWorldEnv:
     def __init__(self, games, max_episode_length=100, query_mode=False):
 
         infos_to_request = EnvInfos(description=True, inventory=True, admissible_commands=True,
-                                    has_won=True, has_lost=True, max_score=True)
+                                    won=True, lost=True, max_score=True)
         env_id = textworld.gym.register_games(games, request_infos=infos_to_request,
                                               max_episode_steps=max_episode_length)
                                               
@@ -36,12 +36,6 @@ class TextWorldEnv:
         reward = score - self.last_score
         self.last_score = score
         self.info = info
-
-        if info["has_won"]:
-            reward += 100
-        elif info["has_lost"]:
-            reward -= 100
-
         self.admissible_commands = info["admissible_commands"]
         if self.query_mode:
             state = obs

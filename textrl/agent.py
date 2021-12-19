@@ -25,10 +25,10 @@ class TextAgent:
             self.model = NaiveNet(max_vocab, 128, device=device, use_last_action=True).to(device)
         elif state_type == "recurrent":
             self.model = RecurrentNet(max_vocab, 128, device=device, use_last_action=True).to(device)
-        elif state_type == "memory":
-            self.model = MemoryNet(max_vocab, 128, max_mem_size=max_memory, device=device, neighbors=True, use_last_action=True).to(device)
+       
         else:
             print("Invalid state type", state_type)
+        
         self.optimizer = optim.Adam(self.model.parameters(), lr)
         self.value_objective = nn.functional.smooth_l1_loss
         self.target = deepcopy(self.model).to(device)
@@ -51,6 +51,7 @@ class TextAgent:
     def train(self):
         self.mode = "train"
         self.transitions = []
+        print(self.model)
         self.model.reset_hidden(1)
         self.no_train_step = 0
 
